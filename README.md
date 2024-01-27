@@ -6,4 +6,5 @@ Task 6: Assign students to write a simple arithmetic smart contract on Arbitrum 
 
 Task 7&8: create a donation contract and add immutability and withdrawal functionality...
 codebase@(ImmutableDonation.sol)
+
 Task 9: Implement a thrift contract.. codebase@(thrift.sol)
