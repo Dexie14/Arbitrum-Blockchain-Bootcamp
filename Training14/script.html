@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Dapp for practice</title>
+    <script
+      src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"
+      type="application/javascript"
+    ></script>
+    <script type="module">
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+
+      const accounts = await provider.send("eth_requestAccounts", []);
+
+      const gasPrice = await provider.send("eth_gasPrice", [])
+
+      console.log(await provider.getGasPrice())
+
+      console.log(accounts)
+
+      const signer = provider.getSigner();
+
+      const transaction = {
+        to: "0xCCa9E4031F39c3Bdf8978e8e149466138208427c",
+        value: ethers.utils.parseUnits("0.05", "ether"),
+        gasPrice: gasPrice
+      }
+
+      await signer.sendTransaction(transaction);
+
+
+    </script>
+</head>
+<body>
+  <input placeholder="amount"   type="text"/>
+  <input placeholder="address"  type="text"/>
+  <button>Submit</button>
+
+</body>
+</html>

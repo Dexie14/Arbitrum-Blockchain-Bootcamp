@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Dapp for DAO Voting</title>
+    <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"></script>
+    <script>
+        async function acreditation() {
+            const provider = new ethers.providers.Web3Provider(window.ethereum);
+            await provider.send("eth_requestAccounts", []);
+            const signer = provider.getSigner();
+
+            const daoAddress = "0xdD18aBDa4d09470487B46a79B88506D37784D0EC"; // DAO contract address
+
+            const daoABI = [
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "_applicantAddress",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "acreditation",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "_candidateAddress",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "voteCandidate",
+                    "outputs": [
+                        {
+                            "internalType": "string",
+                            "name": "",
+                            "type": "string"
+                        }
+                    ],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                }
+            ];
+
+            const daoContract = new ethers.Contract(daoAddress, daoABI, signer);
+
+            const applicantAddress = document.getElementById("applicantAddressInput").value;
+
+            const tx = await daoContract.acreditation(applicantAddress);
+            await tx.wait();
+            console.log('Accreditation successful');
+        }
+
+        async function voteCandidate() {
+            const provider = new ethers.providers.Web3Provider(window.ethereum);
+            await provider.send("eth_requestAccounts", []);
+            const signer = provider.getSigner();
+
+            const daoAddress = "0xdD18aBDa4d09470487B46a79B88506D37784D0EC"; // DAO contract address
+
+            const daoABI = [
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "_applicantAddress",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "acreditation",
+                    "outputs": [],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "address",
+                            "name": "_candidateAddress",
+                            "type": "address"
+                        }
+                    ],
+                    "name": "voteCandidate",
+                    "outputs": [
+                        {
+                            "internalType": "string",
+                            "name": "",
+                            "type": "string"
+                        }
+                    ],
+                    "stateMutability": "nonpayable",
+                    "type": "function"
+                }
+            ];
+
+            const daoContract = new ethers.Contract(daoAddress, daoABI, signer);
+
+            const candidateAddress = document.getElementById("candidateAddressInput").value;
+
+            const tx = await daoContract.voteCandidate(candidateAddress);
+            await tx.wait();
+            console.log('Vote submitted successfully');
+        }
+    </script>
+</head>
+<body>
+    <h1>Simple Dapp for DAO Voting</h1>
+    <label for="applicantAddressInput">Applicant Address:</label>
+    <input id="applicantAddressInput" placeholder="Enter Applicant Address" type="text"/>
+    <br>
+    <button onclick="acreditation()">Accredit Applicant</button>
+    <br><br>
+    <label for="candidateAddressInput">Candidate Address:</label>
+    <input id="candidateAddressInput" placeholder="Enter Candidate Address" type="text"/>
+    <br>
+    <button onclick="voteCandidate()">Vote for Candidate</button>
+</body>
+</html>
